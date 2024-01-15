@@ -1,5 +1,5 @@
 from sklearn.base import BaseEstimator, ClusterMixin
-from sklearn.neighbors import NearestNeighbors
+from scipy.spatial.distance import minkowski
 import numpy as np
 import math
 
@@ -9,21 +9,35 @@ class NBC(BaseEstimator, ClusterMixin):
         self.k = k
 
     def fit_predict(self, X):
-        # Set k=sqrt(n) if k wasn't provided
-        if self.k is None: self.k = int(math.sqrt(X.shape[0]))
+        self.n_ = X.shape[0]
+        self.dim_ = X.shape[1]
+        self.X_ = X
 
-        # Brute k-NN calculates distances to all points
-        self.nbrs_ = NearestNeighbors(n_neighbors=self.k, algorithm="brute").fit(X)
-        _, self.knn_ = self.nbrs_.kneighbors(X)
-        self.n_ = self.knn_.shape[0]
+        # Set k=sqrt(n) if wasn't provided
+        if self.k is None: self.k = int(math.sqrt(self.n_))
 
-        self.calculate_rknn()
-        self.calculate_ndf()
-        self.assign_labels()
+        if self.k > self.n_:
+            raise Exception("Error: The number of neighbors ‘k’ in should be less than the number of elements in the dataset")
+
+        self.knn()
+        self.rknn()
+        self.ndf()
+        self.labels()
 
         return self.labels_
 
-    def calculate_rknn(self):
+    def knn(self):
+        distances = np.empty((self.n_, self.n_))
+        for i in range(self.n_):
+            for j in range(i + 1, self.n_):
+                dist = self.distance(self.X_[i], self.X_[j])
+                distances[i, j] = dist
+                distances[j, i] = dist
+        self.knn_ = np.empty((self.n_, self.k), dtype=int)
+        for p in range(self.n_):
+            self.knn_[p] = distances[p].argsort()[:self.k]
+
+    def rknn(self):
         self.rknn_ = []
         mask = np.zeros((self.n_, self.n_), dtype=bool)
         for i, a in enumerate(self.knn_):
@@ -31,10 +45,10 @@ class NBC(BaseEstimator, ClusterMixin):
         mask = np.logical_and(mask, np.not_equal.outer(np.arange(self.n_), np.arange(self.n_)))
         self.rknn_ += [np.where(mask[i])[0].tolist() for i in range(self.n_)]
 
-    def calculate_ndf(self):
+    def ndf(self):
         self.ndf_ = [len(self.rknn_[i])/len(self.knn_[i]) for i in range(self.n_)]
 
-    def assign_labels(self):
+    def labels(self):
         labels = [-1 for _ in range(self.n_)]
         cluster_id = 1
         for i, nbrs in enumerate(self.knn_):
@@ -55,3 +69,6 @@ class NBC(BaseEstimator, ClusterMixin):
                         labels[p] = cluster_id
                 cluster_id += 1
         self.labels_ = np.array(labels)
+
+    def distance(self, x, y):
+        return minkowski(x, y, p=self.dim_)
