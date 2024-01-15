@@ -12,7 +12,7 @@ Implementation and analysis of **Neighborhood-Based Clustering by Means of the T
 
 ## Project structure
 
-Jupyter notebooks contain algorithm results for different datasets and `k` parameter values. Implemented models are located in `src/models`. Precomputed results of reference algorithms for each *clustbench* dataset are stored in `data/ref-precomputed-results`, results of **KMeans** from *sklearn* were selected for comparison, more can be found [here](https://github.com/gagolews/clustering-results-v1).
+Jupyter notebooks contain algorithm results for different datasets and `k` parameter values. Implemented models are located in `src/models`. Precomputed results of reference algorithms for each *clustbench* dataset are stored in `data/ref-precomputed-results`, results of **KMeans** from *sklearn* were selected for the comparison, more can be found [here](https://github.com/gagolews/clustering-results-v1).
 
 ## Testing models with different datasets
 
