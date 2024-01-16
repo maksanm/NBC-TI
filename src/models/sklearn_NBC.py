@@ -2,7 +2,7 @@ from src.models.NBC import NBC
 from sklearn.neighbors import NearestNeighbors
 import math
 
-class NBC_sklearn(NBC):
+class sklearn_NBC(NBC):
     def __init__(self, k=None, n_clusters=None):
         self.n_clusters = n_clusters
         self.k = k

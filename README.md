@@ -1,4 +1,4 @@
-# NBC-TI clustering
+# TI-NBC clustering
 
 Implementation and analysis of **Neighborhood-Based Clustering by Means of the Triangle Inequality** comparing to standard **NBC** and **NBC** provided by *sklearn*.
 

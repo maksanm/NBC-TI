@@ -11,7 +11,7 @@ class Point:
         self.id = None
         self.orig_id = orig_id
 
-class NBC_TI(NBC):
+class TI_NBC(NBC):
     def __init__(self, k=None, n_clusters=3):
         self.n_clusters = n_clusters
         self.k = k
