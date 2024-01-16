@@ -27,7 +27,7 @@ def plot_results(data, methods, results_dict, reference=None, fig_size=6):
                 if reference is not None and k == n_clusters_ref:
                     fig.add_subplot(gs[i, ncols - 1])
                     genieclust.plots.plot_scatter(data, labels=reference,
-                                                title="Reference partition assigned by experts; n_clusters={n_clusters_ref}", axis="equal")
+                                                title=f"Reference partition assigned by experts; n_clusters={n_clusters_ref}", axis="equal")
     elif dim == 3:
         for m, method in enumerate(methods):
             for i, k in enumerate(results_dict[method].keys()):
@@ -37,7 +37,7 @@ def plot_results(data, methods, results_dict, reference=None, fig_size=6):
                 for it, p in enumerate(data):
                     ax.scatter(p[0], p[1], p[2], color=colors[results_dict[method][k][it] - 1])
         if reference is not None:
-            ax = fig.add_subplot(gs[0, ncols - 1], projection='3d', title="Reference partition assigned by experts; n_clusters={n_clusters_ref}")
+            ax = fig.add_subplot(gs[0, ncols - 1], projection='3d', title=f"Reference partition assigned by experts; n_clusters={n_clusters_ref}")
             for it, label in enumerate(reference):
                 ax.scatter(data[it][n_clusters_ref - k_min], data[it][1], data[it][2], color=colors[label - 1])
     plt.show()

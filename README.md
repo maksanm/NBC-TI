@@ -4,7 +4,7 @@ Implementation and analysis of **Neighborhood-Based Clustering by Means of the T
 
 ## Requirements
 
-- clustbench
+- clustering-benchmarks
 - scikit-learn
 - scipy
 - matplotlib
