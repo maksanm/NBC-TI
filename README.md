@@ -21,4 +21,4 @@ Precomputed results of reference algorithms for each *clustbench* dataset are st
 
 ## Testing models with different datasets
 
-[The *clustbench* dataset catalogue](https://clustering-benchmarks.gagolewski.com/weave/data-v1.html#wut/circles) contains a variety of 2D and 3D datasets, offering extensive possibilities for testing clustering algorithms. To use a different dataset, modify the `battery` and `dataset` variables in any of the notebooks.
+[The *clustbench* dataset catalogue](https://clustering-benchmarks.gagolewski.com/weave/data-v1.html#wut/circles) contains a variety of 2D and 3D datasets, offering extensive possibilities for testing clustering algorithms. To use a different dataset, simply modify the `battery` and `dataset` variables in any of the notebooks.
